@@ -1,15 +1,19 @@
 import '../styles.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN_API_URL = 'https://netzwelt-devtest.azurewebsites.net/Account/SignIn';
 
 const Login = ({ onLogin }) => {
 
-  if(localStorage.getItem('login_token')) {
-    //redirect to home
-  }
+  const [loginHasError, setLoginHasError] = useState(false);
+  const navigate = useNavigate();
 
-  const [loginHasError, setLoginHasError] = useState(false)
+  useEffect( () => {
+    if(localStorage.getItem('login_token')) {
+      navigate('/home/index');
+    }
+  }, [navigate])
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -38,9 +42,11 @@ const Login = ({ onLogin }) => {
 
         if(!response.ok) {
           setLoginHasError(true)
+          return
         }
+
         localStorage.setItem('login_token', 'logged_in');
-        onLogin(true);
+        navigate('/home/index')
       }
 
       catch (error) {

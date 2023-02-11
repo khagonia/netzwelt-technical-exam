@@ -9,7 +9,7 @@ const Territory = ({ territory }) => {
 
   return (
     <>
-    { territory.children.length > 0 && <span className="caret">&#9660;</span>}
+    { territory.children.length > 0 && <span onClick={expand} className="caret">&#9660;</span>}
     <span onClick={expand}>{territory.name}</span>
     {isVisible && 
       <ul className="child">

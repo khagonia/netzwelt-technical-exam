@@ -1,19 +1,24 @@
 import Login from "./components/Login";
 import Home from "./components/Home";
-import { useState } from "react";
+import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+import Root from "./components/Root";
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      {path: '/', element: <Home /> },
+      {path: '/home/index', element: <Home /> },
+      {path: '/account/login', element: <Login /> },
+    ]
+  },
+]);
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('login_token'))
-  const loginUser = (loginState) => {
-    setIsLoggedIn(loginState);
-  }
-
   return (
-    <>
-      { !isLoggedIn && <Login onLogin= {loginUser} />}
-      { isLoggedIn && <Home />}
-    </>
+    <RouterProvider router={router} />
   );
 }
 

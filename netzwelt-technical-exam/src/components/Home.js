@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Territory from "./Territories";
 
 const TERRITORIES_API_URL = 'https://netzwelt-devtest.azurewebsites.net/Territories/All '
 
 const Home = () => {
-  
-  if(!localStorage.getItem('login_token')) {
-    //redirect to login
-  }
 
   const [territories, setTerritories] = useState([]);
+  const navigate = useNavigate();
 
+  // If user is not logged in, redirect to login page
+  useEffect(() => {
+    if(!localStorage.getItem('login_token')) {
+      navigate('/account/login');
+    }
+  }, [navigate])
+
+  // Fetch territory data asynchronously on load
   useEffect(() => {
     const getTerritories = async () => {
       const response = await fetch(TERRITORIES_API_URL);
@@ -20,6 +26,8 @@ const Home = () => {
 
         const data = await response.json()
 
+
+        // Sort loaded data into a tree of parent -> children relationship
         const sortData = (data) => {
           const hashTable = {};
           const sortedData = [];
