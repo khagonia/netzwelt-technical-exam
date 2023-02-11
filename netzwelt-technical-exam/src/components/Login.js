@@ -1,12 +1,15 @@
 import '../styles.css'
+import { useState } from 'react';
 
 const LOGIN_API_URL = 'https://netzwelt-devtest.azurewebsites.net/Account/SignIn';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
 
   if(localStorage.getItem('login_token')) {
-    //route to home page
+    //redirect to home
   }
+
+  const [loginHasError, setLoginHasError] = useState(false)
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -33,9 +36,11 @@ const Login = () => {
       try {
         const response = await fetch(LOGIN_API_URL, request);
 
-        if(!response.ok) throw new Error('Failed to login');
-
-        localStorage.setItem('login_token', true);
+        if(!response.ok) {
+          setLoginHasError(true)
+        }
+        localStorage.setItem('login_token', 'logged_in');
+        onLogin(true);
       }
 
       catch (error) {
@@ -51,6 +56,7 @@ const Login = () => {
     <div className="login-container">
       <h1>Login Section</h1>
       <form onSubmit={submitHandler} className="login-form">
+        { loginHasError && <p className="form-error">Invalid username or password</p>}
         <div className="form-group">
           <label htmlFor="login-username">Username</label>
           <input name="login-username" id="login-username" type="text" />

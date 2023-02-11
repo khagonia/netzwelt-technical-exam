@@ -20,7 +20,7 @@ html {
 body {
   width: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   background-color: var(--background-color);
   grid-template-rows: 1fr;
 
@@ -63,5 +63,47 @@ body {
 .form-group input {
   font-size: var(--fs-label);
   padding: 0.4rem;
+}
+
+.form-error {
+  font-size: var(--fs-label);
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.home-content-area {
+  width: 80vw;
+  height: max-content;
+  min-height: 50rem;
+  background-color: var(--card-color);
+  border-radius: 1rem;
+  padding: 2.4rem;
+}
+
+.heading {
+  padding-bottom: 0.2rem;
+}
+
+.heading ~ p {
+  padding-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.territory {
+  width: max-content;
+  padding: 0.2rem 1.5rem;
+  list-style: none;
+}
+
+.territory:hover {
+  cursor: pointer;
+}
+
+.child {
+  padding-top: 0.2rem;
+}
+
+.caret {
+  padding-right: 0.5rem;
 }
 
